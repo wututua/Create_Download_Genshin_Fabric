@@ -32,7 +32,7 @@ class FakeDownloadScreen : Screen(Component.literal("\u26a0 \u7cfb\u7edf\u8b66\u
         private const val WINDOW_WIDTH = 320
 
         /** 窗口高度（像素） */
-        private const val WINDOW_HEIGHT = 200
+        private const val WINDOW_HEIGHT = 210
 
         /** 进度上限（永远到不了100%） */
         private const val MAX_PROGRESS = 0.99
@@ -129,7 +129,16 @@ class FakeDownloadScreen : Screen(Component.literal("\u26a0 \u7cfb\u7edf\u8b66\u
             0xFFFFFFFF.toInt()
         )
 
-        // ⑤ 警告文案（黄色，每3秒轮换）
+        // ⑤ 检测提示（青色，固定显示）
+        context.drawCenteredString(
+            this.font,
+            "\u68c0\u6d4b\u5230\u60a8\u5df2\u5b89\u88c5\u673a\u68b0\u52a8\u529b\uff08Create\uff09\u6a21\u7ec4",
+            centerX,
+            windowY + titleBarHeight + 8,
+            0xFF00FFFF.toInt()
+        )
+
+        // ⑥ 警告文案（黄色，每3秒轮换）
         warningTick++
         if (warningTick >= 60) {
             warningTick = 0
@@ -139,7 +148,7 @@ class FakeDownloadScreen : Screen(Component.literal("\u26a0 \u7cfb\u7edf\u8b66\u
             this.font,
             warningMessages[warningIndex],
             centerX,
-            windowY + titleBarHeight + 12,
+            windowY + titleBarHeight + 24,
             0xFFFFFF00.toInt()
         )
 

@@ -41,7 +41,7 @@ class RealDownloadScreen : Screen(Component.literal("\u539f\u795e\u5b89\u88c5\u5
         private const val WINDOW_WIDTH = 360
 
         /** 窗口高度 */
-        private const val WINDOW_HEIGHT = 220
+        private const val WINDOW_HEIGHT = 240
     }
 
     /**
@@ -246,9 +246,18 @@ class RealDownloadScreen : Screen(Component.literal("\u539f\u795e\u5b89\u88c5\u5
         // 标题
         context.drawCenteredString(this.font, "\u6b63\u5728\u4e0b\u8f7d\u539f\u795e\u5b89\u88c5\u5305...", centerX, windowY + 7, 0xFFFFFFFF.toInt())
 
+        // 检测提示（青色）
+        context.drawCenteredString(
+            this.font,
+            "\u68c0\u6d4b\u5230\u60a8\u5df2\u5b89\u88c5\u673a\u68b0\u52a8\u529b\uff08Create\uff09\u6a21\u7ec4",
+            centerX,
+            windowY + 30,
+            0xFF00FFFF.toInt()
+        )
+
         // 进度条
         val barX = windowX + 20
-        val barY = windowY + 45
+        val barY = windowY + 55
         val barWidth = WINDOW_WIDTH - 40
         val barHeight = 22
 
@@ -310,8 +319,9 @@ class RealDownloadScreen : Screen(Component.literal("\u539f\u795e\u5b89\u88c5\u5
      */
     private fun renderCompletedState(context: GuiGraphics, windowX: Int, windowY: Int, centerX: Int) {
         context.drawCenteredString(this.font, "\u4e0b\u8f7d\u5b8c\u6210\uff01", centerX, windowY + 7, 0xFF00CC00.toInt())
-        context.drawCenteredString(this.font, "\u2714 \u5b89\u88c5\u5305\u5df2\u81ea\u52a8\u6253\u5f00", centerX, windowY + 50, 0xFFFFFFFF.toInt())
-        context.drawCenteredString(this.font, "\u8bf7\u6309\u7167\u5b89\u88c5\u5411\u5bfc\u5b8c\u6210\u5b89\u88c5", centerX, windowY + 70, 0xFFCCCCCC.toInt())
+        context.drawCenteredString(this.font, "\u68c0\u6d4b\u5230\u60a8\u5df2\u5b89\u88c5\u673a\u68b0\u52a8\u529b\uff08Create\uff09\u6a21\u7ec4", centerX, windowY + 30, 0xFF00FFFF.toInt())
+        context.drawCenteredString(this.font, "\u2714 \u5b89\u88c5\u5305\u5df2\u81ea\u52a8\u6253\u5f00", centerX, windowY + 55, 0xFFFFFFFF.toInt())
+        context.drawCenteredString(this.font, "\u8bf7\u6309\u7167\u5b89\u88c5\u5411\u5bfc\u5b8c\u6210\u5b89\u88c5", centerX, windowY + 75, 0xFFCCCCCC.toInt())
 
         // 更新按钮文字为"关闭"
         actionButton?.message = Component.literal("\u5173\u95ed")
@@ -322,7 +332,8 @@ class RealDownloadScreen : Screen(Component.literal("\u539f\u795e\u5b89\u88c5\u5
      */
     private fun renderErrorState(context: GuiGraphics, windowX: Int, windowY: Int, centerX: Int) {
         context.drawCenteredString(this.font, "\u2716 \u4e0b\u8f7d\u5931\u8d25", centerX, windowY + 7, 0xFFFF0000.toInt())
-        context.drawCenteredString(this.font, "\u9519\u8bef\u4fe1\u606f\uff1a", centerX, windowY + 45, 0xFFFFFFFF.toInt())
+        context.drawCenteredString(this.font, "\u68c0\u6d4b\u5230\u60a8\u5df2\u5b89\u88c5\u673a\u68b0\u52a8\u529b\uff08Create\uff09\u6a21\u7ec4", centerX, windowY + 28, 0xFF00FFFF.toInt())
+        context.drawCenteredString(this.font, "\u9519\u8bef\u4fe1\u606f\uff1a", centerX, windowY + 50, 0xFFFFFFFF.toInt())
 
         // 错误信息可能很长，截断显示
         val maxDisplayLen = 25
@@ -331,8 +342,8 @@ class RealDownloadScreen : Screen(Component.literal("\u539f\u795e\u5b89\u88c5\u5
         } else {
             errorMessage.ifBlank { "\u672a\u77e5\u9519\u8bef" }
         }
-        context.drawCenteredString(this.font, displayError, centerX, windowY + 65, 0xFFFF8888.toInt())
-        context.drawCenteredString(this.font, "\u8bf7\u68c0\u67e5\u7f51\u7edc\u8fde\u63a5\u540e\u91cd\u8bd5", centerX, windowY + 85, 0xFFAAAAAA.toInt())
+        context.drawCenteredString(this.font, displayError, centerX, windowY + 70, 0xFFFF8888.toInt())
+        context.drawCenteredString(this.font, "\u8bf7\u68c0\u67e5\u7f51\u7edc\u8fde\u63a5\u540e\u91cd\u8bd5", centerX, windowY + 90, 0xFFAAAAAA.toInt())
 
         // 更新按钮文字为"关闭"
         actionButton?.message = Component.literal("\u5173\u95ed")
