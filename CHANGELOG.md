@@ -5,6 +5,21 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [1.1.0] - 2026-06-25
+
+### 新增
+
+- 多语言本地化支持
+  - 简体中文（zh_cn）
+  - English（en_us）
+  - 日本語（ja_jp）
+  - 한국어（ko_kr）
+  - Русский（ru_ru）
+- 所有GUI界面文字改为本地化调用（Component.translatable）
+- README新增多语言支持说明
+
+---
+
 ## [1.0.1] - 2026-06-25
 
 ### 新增

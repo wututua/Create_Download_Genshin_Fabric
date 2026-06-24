@@ -25,7 +25,7 @@ import java.util.Random
  *
  * 注意：本类只能在客户端使用，严禁在服务端加载
  */
-class FakeDownloadScreen : Screen(Component.literal("\u26a0 \u7cfb\u7edf\u8b66\u544a \u26a0")) {
+class FakeDownloadScreen : Screen(Component.translatable("create-download-genshin.gui.fake.title")) {
 
     companion object {
         /** 窗口宽度（像素） */
@@ -60,18 +60,18 @@ class FakeDownloadScreen : Screen(Component.literal("\u26a0 \u7cfb\u7edf\u8b66\u
     private var closeButton: Button? = null
 
     /**
-     * 吓唬用户的恐怖警告文案列表
+     * 吓唬用户的恐怖警告文案列表（使用本地化key）
      * 每隔几秒轮换显示，增强心理压迫感
      */
-    private val warningMessages = listOf(
-        "\u8b66\u544a\uff1a\u68c0\u6d4b\u5230\u60a8\u7684\u7535\u8111\u672a\u5b89\u88c5\u300a\u539f\u795e\u300b\uff01",
-        "\u7cfb\u7edf\u6b63\u5728\u5f3a\u5236\u4e0b\u8f7d\u539f\u795e\u5b89\u88c5\u5305...\u8bf7\u52ff\u5173\u95ed\u7535\u8111",
-        "\u8bf7\u52ff\u5173\u95ed\u6b64\u7a97\u53e3\uff0c\u5426\u5219\u53ef\u80fd\u5bfc\u81f4\u7cfb\u7edf\u6587\u4ef6\u635f\u574f\uff01",
-        "\u4e0b\u8f7d\u5b8c\u6210\u540e\u5c06\u81ea\u52a8\u5b89\u88c5\u300a\u539f\u795e\u300b\uff0c\u8bf7\u8010\u5fc3\u7b49\u5f85...",
-        "\u60a8\u7684\u7535\u8111\u5c06\u88ab\u5f3a\u5236\u7ed1\u5b9a\u7c73\u54c8\u6e38\u8d26\u53f7\uff0c\u65e0\u6cd5\u89e3\u7ed1",
-        "\u68c0\u6d4b\u5230\u5927\u91cf\u7cfb\u7edf\u6587\u4ef6\u9700\u8981\u66ff\u6362\uff0c\u8bf7\u52ff\u4e2d\u65ad\u64cd\u4f5c",
-        "\u6b63\u5728\u4fee\u6539\u7cfb\u7edf\u6ce8\u518c\u8868...\u8bf7\u52ff\u65ad\u5f00\u7535\u6e90",
-        "\u68c0\u6d4b\u5230\u60a8\u7684\u786c\u76d8\u7a7a\u95f4\u4e0d\u8db3\uff0c\u6b63\u5728\u6e05\u7406\u975e\u5fc5\u8981\u6587\u4ef6..."
+    private val warningMessageKeys = listOf(
+        "create-download-genshin.gui.fake.warning1",
+        "create-download-genshin.gui.fake.warning2",
+        "create-download-genshin.gui.fake.warning3",
+        "create-download-genshin.gui.fake.warning4",
+        "create-download-genshin.gui.fake.warning5",
+        "create-download-genshin.gui.fake.warning6",
+        "create-download-genshin.gui.fake.warning7",
+        "create-download-genshin.gui.fake.warning8"
     )
 
     override fun init() {
@@ -88,7 +88,7 @@ class FakeDownloadScreen : Screen(Component.literal("\u26a0 \u7cfb\u7edf\u8b66\u
         val buttonY = windowY + WINDOW_HEIGHT - 30
 
         closeButton = addRenderableWidget(
-            Button.builder(Component.literal("\u5173\u95ed\u4e0b\u8f7d")) {
+            Button.builder(Component.translatable("create-download-genshin.gui.fake.close_btn")) {
                 // 点击关闭按钮 → 关闭弹窗
                 this.onClose()
             }.bounds(buttonX, buttonY, buttonWidth, buttonHeight).build()
@@ -108,13 +108,9 @@ class FakeDownloadScreen : Screen(Component.literal("\u26a0 \u7cfb\u7edf\u8b66\u
 
         // ③ 红色警告边框（四边各2像素宽）
         val borderColor = 0xFFFF0000.toInt()
-        // 上边框
         context.fill(windowX, windowY, windowX + WINDOW_WIDTH, windowY + 2, borderColor)
-        // 下边框
         context.fill(windowX, windowY + WINDOW_HEIGHT - 2, windowX + WINDOW_WIDTH, windowY + WINDOW_HEIGHT, borderColor)
-        // 左边框
         context.fill(windowX, windowY, windowX + 2, windowY + WINDOW_HEIGHT, borderColor)
-        // 右边框
         context.fill(windowX + WINDOW_WIDTH - 2, windowY, windowX + WINDOW_WIDTH, windowY + WINDOW_HEIGHT, borderColor)
 
         // ④ 标题栏（红色背景 + 白色大字）
@@ -123,7 +119,7 @@ class FakeDownloadScreen : Screen(Component.literal("\u26a0 \u7cfb\u7edf\u8b66\u
         val centerX = this.width / 2
         context.drawCenteredString(
             this.font,
-            "\u26a0 \u7cfb\u7edf\u7d27\u6025\u8b66\u544a \u26a0",
+            Component.translatable("create-download-genshin.gui.fake.titlebar"),
             centerX,
             windowY + 7,
             0xFFFFFFFF.toInt()
@@ -132,7 +128,7 @@ class FakeDownloadScreen : Screen(Component.literal("\u26a0 \u7cfb\u7edf\u8b66\u
         // ⑤ 检测提示（青色，固定显示）
         context.drawCenteredString(
             this.font,
-            "\u68c0\u6d4b\u5230\u60a8\u5df2\u5b89\u88c5\u673a\u68b0\u52a8\u529b\uff08Create\uff09\u6a21\u7ec4",
+            Component.translatable("create-download-genshin.gui.fake.detected"),
             centerX,
             windowY + titleBarHeight + 8,
             0xFF00FFFF.toInt()
@@ -142,17 +138,17 @@ class FakeDownloadScreen : Screen(Component.literal("\u26a0 \u7cfb\u7edf\u8b66\u
         warningTick++
         if (warningTick >= 60) {
             warningTick = 0
-            warningIndex = (warningIndex + 1) % warningMessages.size
+            warningIndex = (warningIndex + 1) % warningMessageKeys.size
         }
         context.drawCenteredString(
             this.font,
-            warningMessages[warningIndex],
+            Component.translatable(warningMessageKeys[warningIndex]),
             centerX,
             windowY + titleBarHeight + 24,
             0xFFFFFF00.toInt()
         )
 
-        // ⑥ 进度条
+        // ⑦ 进度条
         val barX = windowX + 20
         val barY = windowY + 70
         val barWidth = WINDOW_WIDTH - 40
@@ -180,30 +176,30 @@ class FakeDownloadScreen : Screen(Component.literal("\u26a0 \u7cfb\u7edf\u8b66\u
         context.fill(barX - 1, barY, barX, barY + barHeight, barBorderColor)
         context.fill(barX + barWidth, barY, barX + barWidth + 1, barY + barHeight, barBorderColor)
 
-        // ⑦ 进度百分比文字（白色大号）
-        val percentText = "\u4e0b\u8f7d\u8fdb\u5ea6\uff1a${(progress * 100).toInt()}%"
+        // ⑧ 进度百分比文字（白色大号）
+        val percentText = Component.translatable("create-download-genshin.gui.fake.progress", "${(progress * 100).toInt()}")
         context.drawCenteredString(this.font, percentText, centerX, barY + barHeight + 8, 0xFFFFFFFF.toInt())
 
-        // ⑧ 伪造的文件信息
+        // ⑨ 伪造的文件信息
         context.drawCenteredString(
             this.font,
-            "\u539f\u795e\u5b89\u88c5\u5305 v5.0.0 - 23.8 GB",
+            Component.translatable("create-download-genshin.gui.fake.fileinfo"),
             centerX,
             barY + barHeight + 25,
             0xFFAAAAAA.toInt()
         )
 
-        // ⑨ 伪造的剩余时间（用 (1-progress)*100 分钟制造紧迫感）
+        // ⑩ 伪造的剩余时间（用 (1-progress)*100 分钟制造紧迫感）
         val remainingMinutes = ((1.0 - progress) * 100).toInt().coerceAtLeast(1)
         context.drawCenteredString(
             this.font,
-            "\u9884\u8ba1\u5269\u4f59\u65f6\u95f4\uff1a${remainingMinutes}\u5206\u949f",
+            Component.translatable("create-download-genshin.gui.fake.remaining", "$remainingMinutes"),
             centerX,
             barY + barHeight + 42,
             0xFFAAAAAA.toInt()
         )
 
-        // ⑩ 更新虚假进度
+        // ⑪ 更新虚假进度
         updateFakeProgress()
 
         // 渲染按钮等子组件

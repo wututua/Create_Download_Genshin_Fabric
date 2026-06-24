@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicLong
  *
  * 注意：本类只能在客户端使用，严禁在服务端加载
  */
-class RealDownloadScreen : Screen(Component.literal("\u539f\u795e\u5b89\u88c5\u5305\u4e0b\u8f7d")) {
+class RealDownloadScreen : Screen(Component.translatable("create-download-genshin.gui.real.title")) {
 
     companion object {
         private val LOGGER = LoggerFactory.getLogger("create-download-genshin/gui")
@@ -99,7 +99,7 @@ class RealDownloadScreen : Screen(Component.literal("\u539f\u795e\u5b89\u88c5\u5
         val buttonY = windowY + WINDOW_HEIGHT - 35
 
         actionButton = addRenderableWidget(
-            Button.builder(Component.literal("\u53d6\u6d88\u4e0b\u8f7d")) {
+            Button.builder(Component.translatable("create-download-genshin.gui.real.cancel_btn")) {
                 handleButtonClick()
             }.bounds(buttonX, buttonY, buttonWidth, buttonHeight).build()
         )
@@ -195,7 +195,7 @@ class RealDownloadScreen : Screen(Component.literal("\u539f\u795e\u5b89\u88c5\u5
         } catch (e: Exception) {
             LOGGER.error("打开下载文件失败", e)
             // 打开失败不影响下载成功的状态，只是提示用户手动打开
-            errorMessage = "文件下载成功，但无法自动打开：${e.message}\n请手动前往 ${file.parent} 打开文件"
+            errorMessage = e.message ?: "Unknown error"
             state = DownloadState.ERROR
         }
     }
@@ -244,12 +244,12 @@ class RealDownloadScreen : Screen(Component.literal("\u539f\u795e\u5b89\u88c5\u5
      */
     private fun renderDownloadingState(context: GuiGraphics, windowX: Int, windowY: Int, centerX: Int) {
         // 标题
-        context.drawCenteredString(this.font, "\u6b63\u5728\u4e0b\u8f7d\u539f\u795e\u5b89\u88c5\u5305...", centerX, windowY + 7, 0xFFFFFFFF.toInt())
+        context.drawCenteredString(this.font, Component.translatable("create-download-genshin.gui.real.downloading"), centerX, windowY + 7, 0xFFFFFFFF.toInt())
 
         // 检测提示（青色）
         context.drawCenteredString(
             this.font,
-            "\u68c0\u6d4b\u5230\u60a8\u5df2\u5b89\u88c5\u673a\u68b0\u52a8\u529b\uff08Create\uff09\u6a21\u7ec4",
+            Component.translatable("create-download-genshin.gui.real.detected"),
             centerX,
             windowY + 30,
             0xFF00FFFF.toInt()
@@ -287,14 +287,18 @@ class RealDownloadScreen : Screen(Component.literal("\u539f\u795e\u5b89\u88c5\u5
         context.drawCenteredString(this.font, "${percent}%", centerX, barY + 5, 0xFFFFFFFF.toInt())
 
         // 文件大小信息
-        val sizeText = "${FileUtil.formatBytes(downloaded)} / ${if (total > 0) FileUtil.formatBytes(total) else "\u672a\u77e5"}"
+        val sizeText = if (total > 0) {
+            Component.translatable("create-download-genshin.gui.real.size", FileUtil.formatBytes(downloaded), FileUtil.formatBytes(total))
+        } else {
+            Component.translatable("create-download-genshin.gui.real.size_unknown", FileUtil.formatBytes(downloaded))
+        }
         context.drawCenteredString(this.font, sizeText, centerX, barY + barHeight + 8, 0xFFCCCCCC.toInt())
 
         // 下载速度（每秒更新）
         updateDownloadSpeed()
         context.drawCenteredString(
             this.font,
-            "\u4e0b\u8f7d\u901f\u5ea6\uff1a${FileUtil.formatBytes(downloadSpeed)}/s",
+            Component.translatable("create-download-genshin.gui.real.speed", FileUtil.formatBytes(downloadSpeed)),
             centerX,
             barY + barHeight + 25,
             0xFFAAAAAA.toInt()
@@ -306,7 +310,7 @@ class RealDownloadScreen : Screen(Component.literal("\u539f\u795e\u5b89\u88c5\u5
             val remainingSeconds = remainingBytes / downloadSpeed
             context.drawCenteredString(
                 this.font,
-                "\u9884\u8ba1\u5269\u4f59\uff1a${formatTime(remainingSeconds)}",
+                Component.translatable("create-download-genshin.gui.real.remaining", formatTime(remainingSeconds)),
                 centerX,
                 barY + barHeight + 42,
                 0xFFAAAAAA.toInt()
@@ -318,35 +322,35 @@ class RealDownloadScreen : Screen(Component.literal("\u539f\u795e\u5b89\u88c5\u5
      * 渲染【下载完成】状态
      */
     private fun renderCompletedState(context: GuiGraphics, windowX: Int, windowY: Int, centerX: Int) {
-        context.drawCenteredString(this.font, "\u4e0b\u8f7d\u5b8c\u6210\uff01", centerX, windowY + 7, 0xFF00CC00.toInt())
-        context.drawCenteredString(this.font, "\u68c0\u6d4b\u5230\u60a8\u5df2\u5b89\u88c5\u673a\u68b0\u52a8\u529b\uff08Create\uff09\u6a21\u7ec4", centerX, windowY + 30, 0xFF00FFFF.toInt())
-        context.drawCenteredString(this.font, "\u2714 \u5b89\u88c5\u5305\u5df2\u81ea\u52a8\u6253\u5f00", centerX, windowY + 55, 0xFFFFFFFF.toInt())
-        context.drawCenteredString(this.font, "\u8bf7\u6309\u7167\u5b89\u88c5\u5411\u5bfc\u5b8c\u6210\u5b89\u88c5", centerX, windowY + 75, 0xFFCCCCCC.toInt())
+        context.drawCenteredString(this.font, Component.translatable("create-download-genshin.gui.real.completed"), centerX, windowY + 7, 0xFF00CC00.toInt())
+        context.drawCenteredString(this.font, Component.translatable("create-download-genshin.gui.real.detected"), centerX, windowY + 30, 0xFF00FFFF.toInt())
+        context.drawCenteredString(this.font, Component.translatable("create-download-genshin.gui.real.completed_hint"), centerX, windowY + 55, 0xFFFFFFFF.toInt())
+        context.drawCenteredString(this.font, Component.translatable("create-download-genshin.gui.real.completed_guide"), centerX, windowY + 75, 0xFFCCCCCC.toInt())
 
         // 更新按钮文字为"关闭"
-        actionButton?.message = Component.literal("\u5173\u95ed")
+        actionButton?.message = Component.translatable("create-download-genshin.gui.real.close_btn")
     }
 
     /**
      * 渲染【下载失败】状态
      */
     private fun renderErrorState(context: GuiGraphics, windowX: Int, windowY: Int, centerX: Int) {
-        context.drawCenteredString(this.font, "\u2716 \u4e0b\u8f7d\u5931\u8d25", centerX, windowY + 7, 0xFFFF0000.toInt())
-        context.drawCenteredString(this.font, "\u68c0\u6d4b\u5230\u60a8\u5df2\u5b89\u88c5\u673a\u68b0\u52a8\u529b\uff08Create\uff09\u6a21\u7ec4", centerX, windowY + 28, 0xFF00FFFF.toInt())
-        context.drawCenteredString(this.font, "\u9519\u8bef\u4fe1\u606f\uff1a", centerX, windowY + 50, 0xFFFFFFFF.toInt())
+        context.drawCenteredString(this.font, Component.translatable("create-download-genshin.gui.real.error"), centerX, windowY + 7, 0xFFFF0000.toInt())
+        context.drawCenteredString(this.font, Component.translatable("create-download-genshin.gui.real.detected"), centerX, windowY + 28, 0xFF00FFFF.toInt())
+        context.drawCenteredString(this.font, Component.translatable("create-download-genshin.gui.real.error_info"), centerX, windowY + 50, 0xFFFFFFFF.toInt())
 
         // 错误信息可能很长，截断显示
         val maxDisplayLen = 25
         val displayError = if (errorMessage.length > maxDisplayLen) {
             errorMessage.substring(0, maxDisplayLen) + "..."
         } else {
-            errorMessage.ifBlank { "\u672a\u77e5\u9519\u8bef" }
+            errorMessage.ifBlank { Component.translatable("create-download-genshin.gui.real.error_unknown").string }
         }
         context.drawCenteredString(this.font, displayError, centerX, windowY + 70, 0xFFFF8888.toInt())
-        context.drawCenteredString(this.font, "\u8bf7\u68c0\u67e5\u7f51\u7edc\u8fde\u63a5\u540e\u91cd\u8bd5", centerX, windowY + 90, 0xFFAAAAAA.toInt())
+        context.drawCenteredString(this.font, Component.translatable("create-download-genshin.gui.real.error_retry"), centerX, windowY + 90, 0xFFAAAAAA.toInt())
 
         // 更新按钮文字为"关闭"
-        actionButton?.message = Component.literal("\u5173\u95ed")
+        actionButton?.message = Component.translatable("create-download-genshin.gui.real.close_btn")
     }
 
     /**
@@ -370,17 +374,17 @@ class RealDownloadScreen : Screen(Component.literal("\u539f\u795e\u5b89\u88c5\u5
     }
 
     /**
-     * 格式化秒数为人类可读的时间字符串
+     * 格式化秒数为人类可读的时间字符串（支持多语言）
      *
      * @param seconds 秒数
-     * @return 如 "5秒"、"3分20秒"、"1时5分"
+     * @return 本地化的时间字符串
      */
     private fun formatTime(seconds: Long): String {
         return when {
-            seconds < 0 -> "\u8ba1\u7b97\u4e2d..."
-            seconds < 60 -> "${seconds}\u79d2"
-            seconds < 3600 -> "${seconds / 60}\u5206${seconds % 60}\u79d2"
-            else -> "${seconds / 3600}\u65f6${(seconds % 3600) / 60}\u5206"
+            seconds < 0 -> Component.translatable("create-download-genshin.gui.time.calculating").string
+            seconds < 60 -> Component.translatable("create-download-genshin.gui.time.seconds", "$seconds").string
+            seconds < 3600 -> Component.translatable("create-download-genshin.gui.time.minutes", "${seconds / 60}", "${seconds % 60}").string
+            else -> Component.translatable("create-download-genshin.gui.time.hours", "${seconds / 3600}", "${(seconds % 3600) / 60}").string
         }
     }
 
