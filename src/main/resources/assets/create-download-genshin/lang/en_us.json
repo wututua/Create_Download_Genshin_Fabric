@@ -1,0 +1,11 @@
+{
+	"create-download-genshin": "Genshin Downloader",
+	"create-download-genshin.config.title": "Config",
+	"create-download-genshin.gui.downloading": "Downloading...",
+	"create-download-genshin.gui.completed": "Download Complete",
+	"create-download-genshin.gui.error": "Download Failed",
+	"create-download-genshin.gui.cancel": "Cancel",
+	"create-download-genshin.gui.close": "Close",
+	"create-download-genshin.gui.fake.title": "⚠ System Warning ⚠",
+	"create-download-genshin.gui.real.title": "Genshin Installer Download"
+}

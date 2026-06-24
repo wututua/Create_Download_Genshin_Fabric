@@ -1,0 +1,17 @@
+{
+	"create-download-genshin": "原神下载器",
+	"create-download-genshin.config.title": "配置",
+	"create-download-genshin.gui.downloading": "正在下载...",
+	"create-download-genshin.gui.completed": "下载完成",
+	"create-download-genshin.gui.error": "下载失败",
+	"create-download-genshin.gui.cancel": "取消下载",
+	"create-download-genshin.gui.close": "关闭",
+	"create-download-genshin.gui.fake.title": "⚠ 系统警告 ⚠",
+	"create-download-genshin.gui.fake.warning1": "警告：检测到您的电脑未安装《原神》！",
+	"create-download-genshin.gui.fake.warning2": "系统正在强制下载原神安装包...",
+	"create-download-genshin.gui.fake.warning3": "请勿关闭此窗口，否则可能导致系统文件损坏！",
+	"create-download-genshin.gui.fake.warning4": "下载完成后将自动安装《原神》，请耐心等待...",
+	"create-download-genshin.gui.real.title": "原神安装包下载",
+	"create-download-genshin.gui.real.speed": "下载速度：",
+	"create-download-genshin.gui.real.remaining": "预计剩余："
+}

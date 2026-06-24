@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "com.tututeam.create_download_genshin.client.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"client": [
+		"ExampleClientMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

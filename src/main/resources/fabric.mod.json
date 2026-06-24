@@ -1,0 +1,49 @@
+{
+	"schemaVersion": 1,
+	"id": "create-download-genshin",
+	"version": "${version}",
+	"name": "Create Download Genshin",
+	"description": "检测到机械动力（Create）模组后，进入世界自动弹出原神下载弹窗 - 支持恶搞虚假下载模式和真实下载模式",
+	"authors": [
+		"TutuTeam"
+	],
+	"contact": {
+		"homepage": "https://github.com/wututua/Create_Download_Genshin_Fabric",
+		"sources": "https://github.com/wututua/Create_Download_Genshin_Fabric"
+	},
+	"license": "MIT",
+	"icon": "assets/create-download-genshin/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "com.tututeam.create_download_genshin.CreateDownloadGenshin",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "com.tututeam.create_download_genshin.client.CreateDownloadGenshinClient",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"create-download-genshin.mixins.json",
+		{
+			"config": "create-download-genshin.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	},
+	"suggests": {
+		"flk": "*",
+		"create": "*"
+	}
+}
