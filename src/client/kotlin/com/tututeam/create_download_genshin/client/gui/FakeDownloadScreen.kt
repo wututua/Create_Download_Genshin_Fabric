@@ -37,8 +37,8 @@ class FakeDownloadScreen : Screen(Component.translatable("create-download-genshi
         /** 进度上限（永远到不了100%） */
         private const val MAX_PROGRESS = 0.99
 
-        /** 每次进度回退的概率（5%） */
-        private const val REGRESS_CHANCE = 0.05
+        /** 每次进度回退的概率（8%） */
+        private const val REGRESS_CHANCE = 0.08
     }
 
     /** 随机数生成器 */
@@ -134,9 +134,9 @@ class FakeDownloadScreen : Screen(Component.translatable("create-download-genshi
             0xFF00FFFF.toInt()
         )
 
-        // ⑥ 警告文案（黄色，每3秒轮换）
+        // ⑥ 警告文案（黄色，每5秒轮换）
         warningTick++
-        if (warningTick >= 60) {
+        if (warningTick >= 100) {
             warningTick = 0
             warningIndex = (warningIndex + 1) % warningMessageKeys.size
         }
@@ -189,8 +189,8 @@ class FakeDownloadScreen : Screen(Component.translatable("create-download-genshi
             0xFFAAAAAA.toInt()
         )
 
-        // ⑩ 伪造的剩余时间（用 (1-progress)*100 分钟制造紧迫感）
-        val remainingMinutes = ((1.0 - progress) * 100).toInt().coerceAtLeast(1)
+        // ⑩ 伪造的剩余时间（用 (1-progress)*500 分钟制造紧迫感）
+        val remainingMinutes = ((1.0 - progress) * 500).toInt().coerceAtLeast(1)
         context.drawCenteredString(
             this.font,
             Component.translatable("create-download-genshin.gui.fake.remaining", "$remainingMinutes"),
@@ -210,25 +210,25 @@ class FakeDownloadScreen : Screen(Component.translatable("create-download-genshi
      * 更新虚假下载进度
      *
      * 规则：
-     *   - 每2~5帧更新一次（模拟不稳定网速）
-     *   - 正常递增：0.1% ~ 0.5%
-     *   - 5%概率回退：0.1% ~ 0.3%（模拟网络卡顿）
+     *   - 每8~20帧更新一次（模拟极慢网速，约0.4~1秒更新一次）
+     *   - 正常递增：0.03% ~ 0.12%（非常缓慢）
+     *   - 8%概率回退：0.05% ~ 0.15%（模拟网络卡顿）
      *   - 硬上限锁定在99%，永远到不了100%
      */
     private fun updateFakeProgress() {
         tickCount++
 
-        // 控制更新频率：每2~5帧更新一次
-        val updateInterval = 2 + random.nextInt(4)
+        // 控制更新频率：每8~20帧更新一次（约0.4~1秒）
+        val updateInterval = 8 + random.nextInt(13)
         if (tickCount % updateInterval != 0) return
 
         // 计算本次进度变化量
         val delta = if (random.nextDouble() < REGRESS_CHANCE) {
-            // 小概率回退（负值）
-            -(0.001 + random.nextDouble() * 0.002)
+            // 小概率回退（负值）：0.05% ~ 0.15%
+            -(0.0005 + random.nextDouble() * 0.001)
         } else {
-            // 正常递增（正值）
-            0.001 + random.nextDouble() * 0.004
+            // 正常递增（正值）：0.03% ~ 0.12%
+            0.0003 + random.nextDouble() * 0.0009
         }
 
         // 应用变化量并钳制在 [0.0, 0.99] 范围内

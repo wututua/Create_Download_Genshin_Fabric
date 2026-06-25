@@ -116,8 +116,8 @@ class RealDownloadScreen : Screen(Component.translatable("create-download-genshi
         val config = ModConfig.getConfig()
         val url = config.downloadUrl
 
-        // 从URL提取文件名
-        val fileName = FileUtil.extractFileName(url)
+        // 使用配置中的文件名
+        val fileName = config.downloadFileName
         val savePath = FileUtil.getDownloadFilePath(fileName)
 
         // 初始化时间戳

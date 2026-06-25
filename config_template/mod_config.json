@@ -1,4 +1,5 @@
 {
   "enableRealDownload": false,
-  "downloadUrl": "https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGamePackage?launcher_id=jGHBHlcOq1&game_id=gopR6Cufr3&game_root=genshin"
+  "downloadUrl": "https://ys-api.mihoyo.com/event/download_porter/link/ys_cn/official/pc_backup320",
+  "downloadFileName": "yuanshen.exe"
 }

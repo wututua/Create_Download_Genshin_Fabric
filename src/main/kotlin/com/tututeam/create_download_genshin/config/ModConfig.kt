@@ -52,10 +52,13 @@ object ModConfig {
      *   - true：真实下载模式，异步下载指定URL文件
      * @property downloadUrl 真实下载模式的目标URL
      *   - 仅在 enableRealDownload=true 时生效
+     * @property downloadFileName 下载文件保存时的文件名
+     *   - 仅在 enableRealDownload=true 时生效
      */
     data class ConfigData(
         val enableRealDownload: Boolean = false,
-        val downloadUrl: String = "https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGamePackage?launcher_id=jGHBHlcOq1&game_id=gopR6Cufr3&game_root=genshin"
+        val downloadUrl: String = "https://ys-api.mihoyo.com/event/download_porter/link/ys_cn/official/pc_backup320",
+        val downloadFileName: String = "yuanshen.exe"
     )
 
     /**
