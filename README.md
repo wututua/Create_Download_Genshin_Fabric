@@ -7,6 +7,8 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.4.0-purple?style=flat-square&logo=kotlin)](https://kotlinlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 
+**🌐 语言: [English](README_EN.md) | [中文](README.md)**
+
 ---
 
 ## 目录
@@ -110,7 +112,8 @@
 ```json
 {
   "enableRealDownload": false,
-  "downloadUrl": "https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGamePackage?launcher_id=jGHBHlcOq1&game_id=gopR6Cufr3&game_root=genshin"
+  "downloadUrl": "https://ys-api.mihoyo.com/event/download_porter/link/ys_cn/official/pc_backup320",
+  "downloadFileName": "yuanshen.exe"
 }
 ```
 
@@ -120,6 +123,7 @@
 |------|------|--------|------|
 | `enableRealDownload` | Boolean | `false` | `false` = 恶搞模式（默认），`true` = 真实下载模式 |
 | `downloadUrl` | String | 米哈游API | 真实下载模式的目标URL，仅在 `enableRealDownload=true` 时生效 |
+| `downloadFileName` | String | `yuanshen.exe` | 下载文件保存时的文件名，仅在 `enableRealDownload=true` 时生效 |
 
 ### 切换模式
 
@@ -207,17 +211,17 @@ src/
 ### 恶搞模式进度条算法
 
 ```kotlin
-// 每2~5帧更新一次（模拟不稳定网速）
-val updateInterval = 2 + random.nextInt(4)
+// 每8~20帧更新一次（模拟极慢网速，约0.4~1秒更新一次）
+val updateInterval = 8 + random.nextInt(13)
 if (tickCount % updateInterval != 0) return
 
 // 计算本次进度变化量
-val delta = if (random.nextDouble() < 0.05) {
-    // 5%概率回退 0.1%~0.3%（模拟网络卡顿）
-    -(0.001 + random.nextDouble() * 0.002)
+val delta = if (random.nextDouble() < 0.08) {
+    // 8%概率回退 0.05%~0.15%（模拟网络卡顿）
+    -(0.0005 + random.nextDouble() * 0.001)
 } else {
-    // 95%概率递增 0.1%~0.5%
-    0.001 + random.nextDouble() * 0.004
+    // 92%概率递增 0.03%~0.12%
+    0.0003 + random.nextDouble() * 0.0009
 }
 
 // 硬上限锁99%，永远到不了100%
