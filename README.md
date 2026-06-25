@@ -7,7 +7,7 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.4.0-purple?style=flat-square&logo=kotlin)](https://kotlinlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 
-**🌐 语言: [English](README_EN.md) | [中文](README.md)**
+**🌐 语言: [English](README_EN.md) | [中文](README.md) | [日本語](README_JA.md) | [한국어](README_KO.md) | [Русский](README_RU.md)**
 
 ---
 
